@@ -31,10 +31,25 @@ const Home = ()=>{
 
     },[])//if the  dependency array changes , the use Effect will rerun 
 
-    const handleSearch = (e)=>{
+    const handleSearch = async(e)=>{
           e.preventDefault();
-          alert(searchQuery);
-          setSearchQuery("")
+          if(!searchQuery.trim())return
+          if(loading) return
+          setLoading(true)
+          try{
+            const searchResults = await searchMovies(searchQuery);
+            setMovies(searchResults)
+            setError(null)//clear error when loaded data if there is previeous error in previous try
+
+          }catch(err){ 
+            console.log(err);
+            setError("Failed to search movies ...")
+
+          }finally{
+            setLoading(false)
+          }
+   
+        //   setSearchQuery("")// it depends to ous
 
     }
 
@@ -53,14 +68,25 @@ const Home = ()=>{
                     </button>
 
               </form>
-
-               <div className="movies-grid" >
                 {
-                    movies.map((movie , id)=> 
-                         <MovieCard movie={movie} key={id}/>
-                    )
+                    error  && <div className="error-message">{error}</div>
+
                 }
-               </div>
+
+                {
+                    loading ? <div className="loading">
+                                    Loading ...
+
+                              </div>
+                            :
+                            <div className="movies-grid" >
+                            {
+                                movies.map((movie , id)=> 
+                                     <MovieCard movie={movie} key={id}/>
+                                )
+                            }
+                           </div>
+                }
 
           </div>
 }
