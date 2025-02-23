@@ -1,7 +1,7 @@
 
 import MovieCard from "../componenets/MovieCard";
 import { useState } from "react";
-
+import "../css/Home.css"
 
 
 const Home = ()=>{
