@@ -1,18 +1,35 @@
 
 import MovieCard from "../componenets/MovieCard";
-import { useState } from "react";
-import "../css/Home.css"
+import "../css/Home.css";
+import { useEffect, useState } from "react";
+import {getPopularMovies , searchMovies} from "../services/api.js"
+
 
 
 const Home = ()=>{
     const [searchQuery , setSearchQuery] = useState('');//whenever state update , the component will rerender
+    const [movies , setMovies] = useState([]);
+    const [loading , setLoading] = useState(true);//loading state
+    const [error , setError] = useState(null);//error state
 
 
-    const movies = [
-        {id:1, title:'first' , release_date : '2025'},  
-        {id:2, title:'second' , release_date : '2026'},  
-        {id:3, title:'three' , release_date : '2027'}
-    ];
+    useEffect(()=>{
+        const loadPopularMovies = async()=>{
+            try{
+                const popularMovies = await getPopularMovies();
+                setMovies(popularMovies)
+            } catch(err){
+                console.log(err);
+                setError("Failed to load movies ...")
+            }
+            finally{
+                setLoading(false);//finish get data or error detected
+            }
+
+        }
+        loadPopularMovies();
+
+    },[])//if the  dependency array changes , the use Effect will rerun 
 
     const handleSearch = (e)=>{
           e.preventDefault();
