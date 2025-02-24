@@ -33,7 +33,7 @@ const Home = ()=>{
 
     const handleSearch = async(e)=>{
           e.preventDefault();
-          if(!searchQuery.trim())return
+          if(!searchQuery.trim())return //ensures that searches with only spaces are ignored, preventing unnecessary API calls.
           if(loading) return
           setLoading(true)
           try{
