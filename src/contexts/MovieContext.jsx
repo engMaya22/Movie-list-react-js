@@ -10,7 +10,7 @@ export const MovieProvider = ({children})=>{
     useEffect(() => {
         const storedFavs = localStorage.getItem("favourities")
         if (storedFavs) setFavourities(JSON.parse(storedFavs))
-    }, [])//eevery render
+    }, [])//every render
 
     
     useEffect(() => {

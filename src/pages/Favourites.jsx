@@ -5,13 +5,13 @@ import "../css/Favorites.css";
 
 const Favourites = ()=>{
 
-    const {favourites} = useMovieContext();
+    const {favourities} = useMovieContext();
 
-    if(favourites){
+    if(favourities){
         return  <div className="favorities">
                     <div className="movies-grid" >
                         {
-                            favourites.map((movie , id)=> 
+                            favourities.map((movie , id)=> 
                                 <MovieCard movie={movie} key={id}/>
                             )
                         }
